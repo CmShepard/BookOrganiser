@@ -1,0 +1,29 @@
+﻿<Window x:Class="BookOrganiser.AddBookWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookOrganiser"
+        mc:Ignorable="d"
+        Title="Add Book" Height="300" Width="450" MaxWidth="450">
+    <Grid>
+        <TabControl  Margin="0,0,0,0" Height="200" VerticalAlignment="Top">
+            <TabItem Header="Add Manually">
+                <Grid Background="White" VerticalAlignment="Top">
+                    <TextBlock Margin="20" Background="Azure" VerticalAlignment="Top" TextAlignment="Center" Padding="10" Height="50" >You will have to fill all the attributes manually</TextBlock>
+                    <Button Width="400" Height="25" VerticalAlignment="Top" Margin="0,140,0,0" Name="ManualAddBtn" Click="ManualAddBtn_Click" >Start adding book >>></Button>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Add From Internet">
+                <Grid Background="White">
+                    <TextBlock Margin="20" Background="Azure" VerticalAlignment="Top" TextAlignment="Center" Padding="10" Height="50" TextWrapping="Wrap" >Programm will try to search for the book in the internet.
+                    Please search for ISBN, author or book name.</TextBlock>
+                    <TextBox Width="400" Height="25" VerticalAlignment="Top" Margin="0,100,0,0"></TextBox>
+                    <Button Width="400" Height="25" VerticalAlignment="Top" Margin="0,140,0,0" >Start adding book >>></Button>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Button Height="25" Width="400" VerticalAlignment="Bottom" Margin="20">Finish adding books</Button>
+
+    </Grid>
+</Window>
