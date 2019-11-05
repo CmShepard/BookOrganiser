@@ -88,6 +88,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Book.cs" />
     <Compile Include="SaveLoadSettings.cs" />
     <Page Include="AddBookWindow.xaml">
       <SubType>Designer</SubType>

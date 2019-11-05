@@ -206,7 +206,7 @@ namespace BookOrganiser {
                     DataBase.ExecuteQuerryWithoutOutput(DataBase.CreateInsertQuerry(MainWindow.paramNames, "books", newBook.Params));
                 }
                 mw.ClearRows();
-                mw.UpdateData();
+                mw.UpdateData(mw.searchString);
                 this.Close();
             } else {
                 // If the book is being updated
@@ -234,7 +234,7 @@ namespace BookOrganiser {
                     }
                     DataBase.ExecuteQuerryWithoutOutput(DataBase.CreateUpdateQuerry(MainWindow.paramNames, "books", book.Params));
                 mw.ClearRows();
-                mw.UpdateData();
+                mw.UpdateData(mw.searchString);
                 this.Close();
             }
             
@@ -243,7 +243,7 @@ namespace BookOrganiser {
         private void DeleteBtn_Click(object sender, RoutedEventArgs e) {
             DataBase.ExecuteQuerryWithoutOutput(DataBase.CreateDeleteQuerry("books", "id", book.Id));
             mw.ClearRows();
-            mw.UpdateData();
+            mw.UpdateData(mw.searchString);
             this.Close();
         }
 

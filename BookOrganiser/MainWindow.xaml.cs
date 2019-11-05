@@ -15,255 +15,105 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace BookOrganiser {
-    public class Book {
-        public Book(string id, string cover, string title, string location, string authors, string content,
-            string annotation, string genres, string format, string publisher, string series, string languages,
-            string price, string currency, string circulation, string coverType, string pageCount, string year,
-            string isbn, string userComments) {
-            Params = new string[] {
-                id, cover, title, location, authors, content, annotation, genres, format, publisher, series,
-                languages, price, currency, circulation, coverType, pageCount, year, isbn, userComments
-            };
-        }
-        public Book(string[] parameters) {
-            Params = parameters;
-        }
-        public string[] Params {
-            get;
-        }
-        public string Id {
-            get {
-                return Params[0];
-            }
-            set {
-                int id = 0;
-                if(int.TryParse(value, out id)) {
-                    Params[0] = id.ToString();
-                }
-            }
-        }
-        public string Cover {
-            get {
-                return Params[1];
-            }
-            set {
-                Params[1] = value;
-            }
-        }
-        public string Title {
-            get {
-                return Params[2];
-            }
-            set {
-                Params[2] = value;
-            }
-        }
-        public string Location {
-            get {
-                return Params[3];
-            }
-            set {
-                Params[3] = value;
-            }
-        }
-        public string Authors {
-            get {
-                return Params[4];
-            }
-            set {
-                Params[4] = value;
-            }
-        }
-        public string Content {
-            get {
-                return Params[5];
-            }
-            set {
-                Params[5] = value;
-            }
-        }
-        public string Annotation {
-            get {
-                return Params[6];
-            }
-            set {
-                Params[6] = value;
-            }
-        }
-        public string Genres {
-            get {
-                return Params[7];
-            }
-            set {
-                Params[7] = value;
-            }
-        }
-        public string Format {
-            get {
-                return Params[8];
-            }
-            set {
-                Params[8] = value;
-            }
-        }
-        public string Publisher {
-            get {
-                return Params[9];
-            }
-            set {
-                Params[9] = value;
-            }
-        }
-        public string Series {
-            get {
-                return Params[10];
-            }
-            set {
-                Params[10] = value;
-            }
-        }
-        public string Languages {
-            get {
-                return Params[11];
-            }
-            set {
-                Params[11] = value;
-            }
-        }
-        public string Price {
-            get {
-                return Params[12];
-            }
-            set {
-                Params[12] = value;
-            }
-        }
-        public string Currency {
-            get {
-                return Params[13];
-            }
-            set {
-                Params[13] = value;
-            }
-        }
-        public string Circulation {
-            get {
-                return Params[14];
-            }
-            set {
-                Params[14] = value;
-            }
-        }
-        public string CoverType {
-            get {
-                return Params[15];
-            }
-            set {
-                Params[15] = value;
-            }
-        }
-        public string PageCount {
-            get {
-                return Params[16];
-            }
-            set {
-                Params[16] = value;
-            }
-        }
-        public string Year {
-            get {
-                return Params[17];
-            }
-            set {
-                Params[17] = value;
-            }
-        }
-        public string ISBN {
-            get {
-                return Params[18];
-            }
-            set {
-                Params[18] = value;
-            }
-        }
-        public string UserComments {
-            get {
-                return Params[19];
-            }
-            set {
-                Params[19] = value;
-            }
-        }
-    }
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
 
-        Dictionary<Grid, Grid[]> booksGrid = new Dictionary<Grid, Grid[]>();
+        Dictionary<Grid, Book[]> booksGrid = new Dictionary<Grid, Book[]>();
+        List<string> openRows = new List<string>();
         private int rowThikness = 100;
         Grid selectedGrid;
+        public string searchString;
         public static readonly string[] paramNames = new string[] {"id", "cover_path", "title", "location", "authors", "content",
             "annotation", "genres", "format", "publisher", "series", "languages", "price", "currency", "circulation",
             "cover_type", "page_count", "year", "isbn", "user_comments"};
 
         public MainWindow() {
             InitializeComponent();
-
-            if(!DataBase.ConnectToDataBase("localhost", "5432", "postgres", "1", "Books")){
+            
+            if (!DataBase.ConnectToDataBase("localhost", "5432", "postgres", "1", "Books")){
                 MessageBox.Show("Failed to connect to the database!");
             }
-            UpdateData();
-            //
-            Book book = new Book("1", "data\\images\\1.jpg", "Anna Karenina", "1 шкаф 2 стелаж 9 полка", "Leo Tolstoi", "Anna Karenina", "Book about Anna",
-                "Classic literature", "9x15", "Yuzhno-Uralskoye Izdatelstvo", "Klassiki", "Russian", "180", "Rub", "15000", "Hard", "250",
-                "1978", "", "");
-            Book book2 = new Book("2", "data\\images\\1.jpg", "Anna Karenina", "1 шкаф 2 стелаж 9 полка", "Leo Tolstoi", "Anna Karenina", "Book about Anna",
-                "Classic literature", "9x15", "Yuzhno-Uralskoye Izdatelstvo", "Klassiki", "Russian", "180", "Rub", "15000", "Hard", "250",
-                "1978", "", "");
-            Book book3 = new Book("3", "data\\images\\1", "Anna Karenina", "1 шкаф 2 стелаж 9 полка", "Leo Tolstoi", "Anna Karenina", "Book about Anna",
-                "Classic literature", "9x15", "Yuzhno-Uralskoye Izdatelstvo", "Klassiki", "Russian", "180", "Rub", "15000", "Hard", "250",
-                "1978", "", "");
-            Book book4 = new Book("4", "data\\images\\1.jpg", "Anna Karenina", "1 шкаф 2 стелаж 9 полка", "Leo Tolstoi", "Anna Karenina", "Book about Anna",
-                "Classic literature", "9x15", "Yuzhno-Uralskoye Izdatelstvo", "Klassiki", "Russian", "180", "Rub", "15000", "Hard", "250",
-                "1978", "", "");
-            AddBookRows("1 шкаф 2 стелаж 9 полка", new Book[] { book, book2, book3, book4 });
-            AddBookRows("1 шкаф 3 стелаж 9 полка", new Book[] { book, book2, book3, book4 });
+            //ImportFromLiba();
+            UpdateData("");
         }
+        void ImportFromLiba() {
+            System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog();
+            dialog.Filter = "HTML file (*.html)|*.html";
+            dialog.Title = "Select LibaBook backup file";
+            if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+                string file = dialog.FileName;
+                string[] lines = System.IO.File.ReadAllLines(file);
 
-        public void UpdateData() {
+                for(int i = 69; i < lines.Length - 10; i+= 28) {
+                    string[] parameters = new string[20];
+                    parameters[0] = lines[i].Substring(30, lines[i].IndexOf("</TD>") - 30);
+                    if(lines[i + 1].IndexOf("&nbsp") == -1)
+                        parameters[1] = "data\\images\\"  + lines[i + 1].Substring(77, lines[i + 1].IndexOf("'> <img") - 77);
+                    parameters[2] = lines[i + 2].Substring(30, lines[i + 2].IndexOf("</TD>") - 30);
+                    parameters[3] = lines[i + 3].Substring(30, lines[i + 3].IndexOf("</TD>") - 30);
+                    int[] rows = new int[] { 5, 6, 7, 8, 11, 12, 13, 14, 15, 18, 16, 17, 19, 21, 22, 20 };
+                    int k = 4;
+                    foreach(int j in rows) {
+                        string line = lines[i + j];
+                        while (lines[i + j].IndexOf("</TD>") == -1) {
+                            i++;
+                            line += lines[i + j];
+                        }
+                        if (line.Substring(30, line.IndexOf("</TD>") - 30) != "&nbsp") {
+                            parameters[k] = line.Substring(30, line.IndexOf("</TD>") - 30);
+                        }
+                        k++;
+                    }
+                    DataBase.ExecuteQuerryWithoutOutput(DataBase.CreateInsertQuerry(paramNames, "books", parameters));
+                }
+                ClearRows();
+            }
+        }
+        //! Updates rows based on search
+        public void UpdateData(string search) {
             string[] locations = DataBase.GetDistinctValues("location", "books");
             foreach (string loc in locations) {
-                Book[] books = DataBase.ExecuteSelectQuerry(DataBase.CreateSelectQuerry(paramNames, "books", "title", "location", loc));
-                AddBookRows(loc, books);
+                Book[] books = DataBase.ExecuteSelectQuerry(DataBase.CreateSelectQuerry(paramNames, "books", "title", "location", loc, search));
+                if (books != null && books.Length > 0) {
+                    Grid grid;
+                    AddMainParameterRows(loc, books, out grid);
+                    if(openRows.IndexOf(loc) > 0) {
+                        ShowHideBooksRows((Button)grid.Children[0], grid);
+                    }
+                }
             }
             GC.Collect();
         }
+        //! Expand main parameter to book rows by pressing button
         public void ButtonExpand_Click(Object sender, RoutedEventArgs e) {
             Button btn = (Button)sender;
             Grid grd = (Grid)btn.Parent;
-            ResizeRows(btn, grd);
+            ShowHideBooksRows(btn, grd);
         }
+        //! Expand main parameter to book rows by double clicking
         public void MainParameterGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
             if (e.ClickCount == 2) {
                 Grid grd = (Grid)sender;
                 Button btn = (Button)grd.Children[0];
-                ResizeRows(btn, grd);
+                ShowHideBooksRows(btn, grd);
             }
 
         }
-        void ResizeRows(Button btn, Grid grd) {
+        //! Creates and deletes books rows
+        void ShowHideBooksRows(Button btn, Grid grd) {
             if (grd.Tag.ToString() == "+") {
-                for (int i = 0; i < booksGrid[grd].Count(); i++) {
-                    booksGrid[grd][i].Height = rowThikness;
-                }
+                AddBooksRows(booksGrid[grd], grd);
+                TextBlock tb = (TextBlock)grd.Children[1];
+                openRows.Add(tb.Text);
                 btn.Content = "-";
                 grd.Tag = "-";
 
             } else {
-                for (int i = 0; i < booksGrid[grd].Count(); i++) {
-                    booksGrid[grd][i].Height = 0;
-                }
+                ElementStack.Children.RemoveRange(ElementStack.Children.IndexOf(grd.Parent as Border) + 1, booksGrid[grd].Count());
+                TextBlock tb = (TextBlock)grd.Children[1];
+                openRows.Remove(tb.Text);
                 btn.Content = "+";
                 grd.Tag = "+";
             }
@@ -273,14 +123,61 @@ namespace BookOrganiser {
             ElementStack.Children.Clear();
         }
 
+        //! Insert books rows to the Stack after the pain parameter grid
+        public void AddBooksRows(Book[] books, Grid grid) {
+            #region AddBooksRows
+            Grid[] booksGr = new Grid[books.Length];
+            for (int i = 0; i < books.Length; i++) {
+                booksGr[i] = new Grid();
+                booksGr[i].Height = rowThikness;
+                booksGr[i].Tag = books[i];
+                booksGr[i].MouseDown += BookGrid_MouseClick;
+                booksGr[i].Background = new SolidColorBrush(Colors.Azure);
+                for (int j = 0; j < 20; j++) {
+                    Binding bnd = new Binding("Width") { ElementName = ("HeaderColumn" + j.ToString()) };
+                    ColumnDefinition cd = new ColumnDefinition();
+                    cd.SetBinding(ColumnDefinition.WidthProperty, bnd);
+                    booksGr[i].ColumnDefinitions.Add(cd);
+
+                    Border bookParamBorder = new Border();
+                    bookParamBorder.BorderBrush = new SolidColorBrush(Colors.Gray);
+                    bookParamBorder.BorderThickness = new Thickness(0, 0, 1, 1);
+                    Grid.SetColumn(bookParamBorder, j);
+
+                    if (j != 1) {
+                        TextBlock tb = new TextBlock();
+                        tb.TextWrapping = TextWrapping.Wrap;
+                        tb.Text = books[i].Params[j];
+                        tb.Margin = new Thickness(3);
+                        bookParamBorder.Child = tb;
+                    } else {
+                        Image im = new Image();
+                        if (books[i].Cover != null && books[i].Cover != "") {
+                            BitmapImage src = new BitmapImage();
+                            src.BeginInit();
+                            src.UriSource = new Uri(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, books[i].Cover), UriKind.Absolute);
+                            src.CacheOption = BitmapCacheOption.OnLoad;
+                            src.EndInit();
+                            im.Source = src;
+                            im.Stretch = Stretch.Uniform;
+                            im.Margin = new Thickness(3);
+                        }
+                        bookParamBorder.Child = im;
+                    }
+                    booksGr[i].Children.Add(bookParamBorder);
+                }
+                ElementStack.Children.Insert(ElementStack.Children.IndexOf(grid.Parent as Border) + 1, booksGr[i]);
+            }
+            #endregion
+        }
         //! Add books rows for one main parameter. mainParameter - SORT BY parameter
-        public void AddBookRows(string mainParameter, Book[] books) {
-            #region AddButton
+        public void AddMainParameterRows(string mainParameter, Book[] books, out Grid mainParameterGrid) {
+            #region AddMainParameterGrid
             Border mainParamBorder = new Border();
             mainParamBorder.BorderBrush = new SolidColorBrush(Colors.Gray);
             mainParamBorder.BorderThickness = new Thickness(1);
 
-            Grid mainParameterGrid = new Grid();
+            mainParameterGrid = new Grid();
             mainParameterGrid.Height = 20;
             mainParameterGrid.Width = Headers.Width - 40;
             mainParameterGrid.Background = new SolidColorBrush(Colors.LightBlue);
@@ -311,62 +208,20 @@ namespace BookOrganiser {
             ElementStack.Children.Add(mainParamBorder);
             #endregion
 
-            #region AddBooksRows
-            Grid[] booksGr = new Grid[books.Length];
-            for (int i = 0; i < books.Length; i++) {
-                booksGr[i] = new Grid();
-                booksGr[i].Height = 0;
-                booksGr[i].Tag = books[i];
-                booksGr[i].MouseDown += BookGrid_MouseClick;
-                booksGr[i].Background = new SolidColorBrush(Colors.Azure);
-                for(int j = 0; j < 20; j++) {
-                    Binding bnd = new Binding("Width") { ElementName = ("HeaderColumn" + j.ToString()) };
-                    ColumnDefinition cd = new ColumnDefinition();
-                    cd.SetBinding(ColumnDefinition.WidthProperty, bnd);
-                    booksGr[i].ColumnDefinitions.Add(cd);
-
-                    Border bookParamBorder = new Border();
-                    bookParamBorder.BorderBrush = new SolidColorBrush(Colors.Gray);
-                    bookParamBorder.BorderThickness = new Thickness(0,0,1,1);
-                    Grid.SetColumn(bookParamBorder, j);
-
-                    if(j != 1) {
-                        TextBlock tb = new TextBlock();
-                        tb.TextWrapping = TextWrapping.Wrap;
-                        tb.Text = books[i].Params[j];
-                        tb.Margin = new Thickness(3);
-                        bookParamBorder.Child = tb;
-                    } else {
-                        Image im = new Image();
-                        if (books[i].Cover != null && books[i].Cover != "") {
-                            BitmapImage src = new BitmapImage();
-                            src.BeginInit();
-                            src.UriSource = new Uri(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, books[i].Cover), UriKind.Absolute);
-                            src.CacheOption = BitmapCacheOption.OnLoad;
-                            src.EndInit();
-                            im.Source = src;
-                            im.Stretch = Stretch.Uniform;
-                            im.Margin = new Thickness(3);
-                        }
-                        bookParamBorder.Child = im;
-                    }
-                    booksGr[i].Children.Add(bookParamBorder);
-                }
-                ElementStack.Children.Add(booksGr[i]);
-            }
-            #endregion
-            booksGrid.Add(mainParameterGrid, booksGr);
+            booksGrid.Add(mainParameterGrid, books);
         }
         //! Synchronise scroll viewer for headers and content
         private void ContenScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e) {
             HeaderScroll.ScrollToHorizontalOffset(e.HorizontalOffset);
         }
 
+        //! Open AddBook dialogue
         private void AddBookBtn_Click(object sender, RoutedEventArgs e) {
             AddBookWindow dialog = new AddBookWindow(this);
             dialog.Show();
         }
 
+        //! Selecting book row on single click, opening change book dialog on double click
         private void BookGrid_MouseClick(object sender, MouseButtonEventArgs e) {
             Grid grid = sender as Grid;
              if(e.ClickCount == 1) {
@@ -380,6 +235,20 @@ namespace BookOrganiser {
                 dialog.Owner = this;
                 dialog.Show();
                 dialog.Focus();
+            }
+        }
+        //! Quick search by word in TextBox
+        private void QuickSearchBtn_Click(object sender, RoutedEventArgs e) {
+            ClearRows();
+            searchString = QuickSearchTB.Text;
+            UpdateData(searchString);
+        }
+        //! Quick search by word in TextBox by pressing Enter key
+        private void QuickSearchTB_KeyDown(object sender, KeyEventArgs e) {
+            if(e.Key == Key.Enter) {
+                ClearRows();
+                searchString = QuickSearchTB.Text;
+                UpdateData(searchString);
             }
         }
     }

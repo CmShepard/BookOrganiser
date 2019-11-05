@@ -55,7 +55,7 @@ namespace BookOrganiser {
         }
 
         //! Returns querry for the SELECT command
-        public static string CreateSelectQuerry(string[] columns, string table, string orderByColumn, string whereColumn, string whereValue) {
+        public static string CreateSelectQuerry(string[] columns, string table, string orderByColumn, string whereColumn, string whereValue, string quickSearch) {
             string querry = "SELECT ";
             for(int i = 0; i < columns.Length; i++) {
                 if (i != columns.Length - 1)
@@ -66,8 +66,19 @@ namespace BookOrganiser {
             querry += table;
             if (whereColumn.Length > 0)
                 querry += "\nWHERE " + whereColumn + " = '" + whereValue + "'";
+            if(quickSearch.Length > 0) {
+                for(int i = 2; i < columns.Length; i++) {
+                    if (i == 2)
+                        querry += " AND (";
+                    else
+                        querry += " OR ";
+                    
+                    querry += columns[i] + " ILIKE '%" + quickSearch + "%'";
+                }
+                querry += ")";
+            }
             if (orderByColumn.Length > 0)
-                querry += "\nORDER BY " + orderByColumn;
+                querry += "\nORDER BY " + orderByColumn + " DESC";
             querry += ";";
             return querry;
         }
@@ -102,7 +113,6 @@ namespace BookOrganiser {
             querry += " \n WHERE " + columns[0] + " = '" + values[0] + "';";
             return querry;
         }
-
         public static void ExecuteQuerryWithoutOutput(string querry) {
             NpgsqlCommand npgSqlCommand = new NpgsqlCommand(querry, connection);
             npgSqlCommand.ExecuteNonQuery();

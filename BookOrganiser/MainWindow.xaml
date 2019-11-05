@@ -18,8 +18,8 @@
             <Button Width="100" Height="25" Margin="5,0,0,0" HorizontalAlignment="Left" Content="Add Book" Name="AddBookBtn" Click="AddBookBtn_Click"/>
             <Button Width="100" Height="25" Margin="5,0,0,0" HorizontalAlignment="Left" Content="Search Book" Name="SearchBookBtn"/>
             <TextBlock VerticalAlignment="Center" Margin="5,0,0,0">Quick search:</TextBlock>
-            <TextBox Height="25" Width="150" Margin="5,0,0,0" VerticalContentAlignment="Center"></TextBox>
-            <Button Width="25" Height="25" Margin="5,0,0,0" HorizontalAlignment="Left" Content="🔍" Name="QuickSearchBtn"/>
+            <TextBox Height="25" Width="150" Margin="5,0,0,0" VerticalContentAlignment="Center" Name="QuickSearchTB" KeyDown="QuickSearchTB_KeyDown"></TextBox>
+            <Button Width="25" Height="25" Margin="5,0,0,0" HorizontalAlignment="Left" Content="🔍" Name="QuickSearchBtn" Click="QuickSearchBtn_Click"/>
         </DockPanel>
 
         <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden" Grid.Row="1"
