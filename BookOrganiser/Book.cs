@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookOrganiser {
     public class Book {
+        //! Constructor with separate values
         public Book(string id, string cover, string title, string location, string authors, string content,
             string annotation, string genres, string format, string publisher, string series, string languages,
             string price, string currency, string circulation, string coverType, string pageCount, string year,
@@ -15,6 +16,7 @@ namespace BookOrganiser {
                 languages, price, currency, circulation, coverType, pageCount, year, isbn, userComments
             };
         }
+        //! Constructor with array as imput
         public Book(string[] parameters) {
             Params = parameters;
         }

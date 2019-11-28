@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,22 +21,40 @@ namespace BookOrganiser {
 
         Dictionary<Grid, Book[]> booksGrid = new Dictionary<Grid, Book[]>();
         List<string> openRows = new List<string>();
-        private int rowThikness = 100;
         Grid selectedGrid;
-        public string searchString;
+        public static string searchString;
+        public static string advancedSearchString;
         public static readonly string[] paramNames = new string[] {"id", "cover_path", "title", "location", "authors", "content",
             "annotation", "genres", "format", "publisher", "series", "languages", "price", "currency", "circulation",
             "cover_type", "page_count", "year", "isbn", "user_comments"};
+        public static string tableName = "books";
 
         public MainWindow() {
             InitializeComponent();
-            
-            if (!DataBase.ConnectToDataBase("localhost", "5432", "postgres", "1", "Books")){
+            ReadSettings();
+            if (!DataBase.ConnectToDataBase(Properties.Settings.Default.dataBaseHost,
+                Properties.Settings.Default.dataBasePort.ToString(), "postgres",
+                Properties.Settings.Default.dataBasePassword, Properties.Settings.Default.dataBaseName)){
                 MessageBox.Show("Failed to connect to the database!");
             }
             //ImportFromLiba();
-            UpdateData("");
+            UpdateData("", "");
         }
+
+        void ReadSettings() {
+            this.Width = Properties.Settings.Default.mainWindowWidth;
+            this.Height = Properties.Settings.Default.mainWindowHeight;
+            tableName = Properties.Settings.Default.tableName;
+            if (Properties.Settings.Default.mainWindowIsFullScreen) {
+                this.WindowState = WindowState.Maximized;
+            }
+
+            for(int i = 0; i < 20; i++) {
+                Headers.ColumnDefinitions[i].Width = new GridLength((int)Properties.Settings.Default["columnWidth" + i.ToString()]);
+            }
+        }
+
+        #region TEMP IMPORT
         void ImportFromLiba() {
             System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog();
             dialog.Filter = "HTML file (*.html)|*.html";
@@ -48,11 +65,11 @@ namespace BookOrganiser {
 
                 for(int i = 69; i < lines.Length - 10; i+= 28) {
                     string[] parameters = new string[20];
-                    parameters[0] = lines[i].Substring(30, lines[i].IndexOf("</TD>") - 30);
+                    parameters[0] = lines[i].Substring(30, lines[i].IndexOf("</TD>") - 30).Replace("&quot;", "\"");
                     if(lines[i + 1].IndexOf("&nbsp") == -1)
                         parameters[1] = "data\\images\\"  + lines[i + 1].Substring(77, lines[i + 1].IndexOf("'> <img") - 77);
-                    parameters[2] = lines[i + 2].Substring(30, lines[i + 2].IndexOf("</TD>") - 30);
-                    parameters[3] = lines[i + 3].Substring(30, lines[i + 3].IndexOf("</TD>") - 30);
+                    parameters[2] = lines[i + 2].Substring(30, lines[i + 2].IndexOf("</TD>") - 30).Replace("&quot;", "\"");
+                    parameters[3] = lines[i + 3].Substring(30, lines[i + 3].IndexOf("</TD>") - 30).Replace("&quot;", "\"");
                     int[] rows = new int[] { 5, 6, 7, 8, 11, 12, 13, 14, 15, 18, 16, 17, 19, 21, 22, 20 };
                     int k = 4;
                     foreach(int j in rows) {
@@ -62,7 +79,7 @@ namespace BookOrganiser {
                             line += lines[i + j];
                         }
                         if (line.Substring(30, line.IndexOf("</TD>") - 30) != "&nbsp") {
-                            parameters[k] = line.Substring(30, line.IndexOf("</TD>") - 30);
+                            parameters[k] = line.Substring(30, line.IndexOf("</TD>") - 30).Replace("&quot;", "\"");
                         }
                         k++;
                     }
@@ -71,15 +88,19 @@ namespace BookOrganiser {
                 ClearRows();
             }
         }
+        #endregion
+
         //! Updates rows based on search
-        public void UpdateData(string search) {
-            string[] locations = DataBase.GetDistinctValues("location", "books");
+        public void UpdateData(string search, string advancedSearch) {
+            ClearRows();
+            string[] locations = DataBase.GetDistinctValues("location", tableName);
             foreach (string loc in locations) {
-                Book[] books = DataBase.ExecuteSelectQuerry(DataBase.CreateSelectQuerry(paramNames, "books", "title", "location", loc, search));
+                Book[] books = DataBase.ExecuteSelectQuerry(DataBase.CreateSelectQuerry(paramNames, tableName, "title", "location",
+                    loc, search, advancedSearch));
                 if (books != null && books.Length > 0) {
                     Grid grid;
                     AddMainParameterRows(loc, books, out grid);
-                    if(openRows.IndexOf(loc) > 0) {
+                    if(openRows.IndexOf(loc) >= 0) {
                         ShowHideBooksRows((Button)grid.Children[0], grid);
                     }
                 }
@@ -129,7 +150,7 @@ namespace BookOrganiser {
             Grid[] booksGr = new Grid[books.Length];
             for (int i = 0; i < books.Length; i++) {
                 booksGr[i] = new Grid();
-                booksGr[i].Height = rowThikness;
+                booksGr[i].Height = Properties.Settings.Default.rowHeight;
                 booksGr[i].Tag = books[i];
                 booksGr[i].MouseDown += BookGrid_MouseClick;
                 booksGr[i].Background = new SolidColorBrush(Colors.Azure);
@@ -239,17 +260,49 @@ namespace BookOrganiser {
         }
         //! Quick search by word in TextBox
         private void QuickSearchBtn_Click(object sender, RoutedEventArgs e) {
-            ClearRows();
             searchString = QuickSearchTB.Text;
-            UpdateData(searchString);
+            advancedSearchString = "";
+            UpdateData(searchString, "");
         }
         //! Quick search by word in TextBox by pressing Enter key
         private void QuickSearchTB_KeyDown(object sender, KeyEventArgs e) {
             if(e.Key == Key.Enter) {
-                ClearRows();
                 searchString = QuickSearchTB.Text;
-                UpdateData(searchString);
+                advancedSearchString = "";
+                UpdateData(searchString, "");
             }
+        }
+
+        private void SearchBookBtn_Click(object sender, RoutedEventArgs e) {
+            SearchWindow dialog = new SearchWindow(this);
+            dialog.Show();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            DataBase.DisconnectDatabase();
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e) {
+            Properties.Settings.Default.mainWindowWidth = (int)e.NewSize.Width;
+            Properties.Settings.Default.mainWindowHeight = (int)e.NewSize.Height;
+            if (this.WindowState == WindowState.Maximized)
+                Properties.Settings.Default.mainWindowIsFullScreen = true;
+            else if(this.WindowState == WindowState.Normal)
+                Properties.Settings.Default.mainWindowIsFullScreen = false;
+
+            Properties.Settings.Default.Save();
+        }
+
+        private void GridSplitter_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e) {
+            GridSplitter gs = (GridSplitter)sender;
+            Properties.Settings.Default["columnWidth" + Grid.GetColumn(gs).ToString()]
+                = (int)Headers.ColumnDefinitions[Grid.GetColumn(gs)].Width.Value;
+            Properties.Settings.Default.Save();
+        }
+
+        private void SettingsBtn_Click(object sender, RoutedEventArgs e) {
+            SettingsWindow dialog = new SettingsWindow();
+            dialog.Show();
         }
     }
 }

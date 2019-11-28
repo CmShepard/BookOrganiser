@@ -9,17 +9,413 @@
 //------------------------------------------------------------------------------
 
 namespace BookOrganiser.Properties {
-
-
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "11.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.3.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
-
+        
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-
+        
         public static Settings Default {
             get {
                 return defaultInstance;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("800")]
+        public int mainWindowWidth {
+            get {
+                return ((int)(this["mainWindowWidth"]));
+            }
+            set {
+                this["mainWindowWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("600")]
+        public int mainWindowHeight {
+            get {
+                return ((int)(this["mainWindowHeight"]));
+            }
+            set {
+                this["mainWindowHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int rowHeight {
+            get {
+                return ((int)(this["rowHeight"]));
+            }
+            set {
+                this["rowHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("40")]
+        public int columnWidth0 {
+            get {
+                return ((int)(this["columnWidth0"]));
+            }
+            set {
+                this["columnWidth0"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int columnWidth1 {
+            get {
+                return ((int)(this["columnWidth1"]));
+            }
+            set {
+                this["columnWidth1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int columnWidth2 {
+            get {
+                return ((int)(this["columnWidth2"]));
+            }
+            set {
+                this["columnWidth2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("150")]
+        public int columnWidth3 {
+            get {
+                return ((int)(this["columnWidth3"]));
+            }
+            set {
+                this["columnWidth3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int columnWidth4 {
+            get {
+                return ((int)(this["columnWidth4"]));
+            }
+            set {
+                this["columnWidth4"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int columnWidth5 {
+            get {
+                return ((int)(this["columnWidth5"]));
+            }
+            set {
+                this["columnWidth5"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
+        public int columnWidth6 {
+            get {
+                return ((int)(this["columnWidth6"]));
+            }
+            set {
+                this["columnWidth6"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int columnWidth7 {
+            get {
+                return ((int)(this["columnWidth7"]));
+            }
+            set {
+                this["columnWidth7"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int columnWidth8 {
+            get {
+                return ((int)(this["columnWidth8"]));
+            }
+            set {
+                this["columnWidth8"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int columnWidth9 {
+            get {
+                return ((int)(this["columnWidth9"]));
+            }
+            set {
+                this["columnWidth9"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int columnWidth10 {
+            get {
+                return ((int)(this["columnWidth10"]));
+            }
+            set {
+                this["columnWidth10"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int columnWidth11 {
+            get {
+                return ((int)(this["columnWidth11"]));
+            }
+            set {
+                this["columnWidth11"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int columnWidth12 {
+            get {
+                return ((int)(this["columnWidth12"]));
+            }
+            set {
+                this["columnWidth12"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int columnWidth13 {
+            get {
+                return ((int)(this["columnWidth13"]));
+            }
+            set {
+                this["columnWidth13"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int columnWidth14 {
+            get {
+                return ((int)(this["columnWidth14"]));
+            }
+            set {
+                this["columnWidth14"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int columnWidth15 {
+            get {
+                return ((int)(this["columnWidth15"]));
+            }
+            set {
+                this["columnWidth15"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int columnWidth16 {
+            get {
+                return ((int)(this["columnWidth16"]));
+            }
+            set {
+                this["columnWidth16"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int columnWidth17 {
+            get {
+                return ((int)(this["columnWidth17"]));
+            }
+            set {
+                this["columnWidth17"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int columnWidth18 {
+            get {
+                return ((int)(this["columnWidth18"]));
+            }
+            set {
+                this["columnWidth18"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int columnWidth19 {
+            get {
+                return ((int)(this["columnWidth19"]));
+            }
+            set {
+                this["columnWidth19"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("800")]
+        public int addChangeBookWindowWidth {
+            get {
+                return ((int)(this["addChangeBookWindowWidth"]));
+            }
+            set {
+                this["addChangeBookWindowWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("600")]
+        public int addChangeBookWindowHeight {
+            get {
+                return ((int)(this["addChangeBookWindowHeight"]));
+            }
+            set {
+                this["addChangeBookWindowHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool mainWindowIsFullScreen {
+            get {
+                return ((bool)(this["mainWindowIsFullScreen"]));
+            }
+            set {
+                this["mainWindowIsFullScreen"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Books")]
+        public string dataBaseName {
+            get {
+                return ((string)(this["dataBaseName"]));
+            }
+            set {
+                this["dataBaseName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public string dataBasePassword {
+            get {
+                return ((string)(this["dataBasePassword"]));
+            }
+            set {
+                this["dataBasePassword"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("localhost")]
+        public string dataBaseHost {
+            get {
+                return ((string)(this["dataBaseHost"]));
+            }
+            set {
+                this["dataBaseHost"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5432")]
+        public int dataBasePort {
+            get {
+                return ((int)(this["dataBasePort"]));
+            }
+            set {
+                this["dataBasePort"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("books")]
+        public string tableName {
+            get {
+                return ((string)(this["tableName"]));
+            }
+            set {
+                this["tableName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("postgres")]
+        public string dataBaseUser {
+            get {
+                return ((string)(this["dataBaseUser"]));
+            }
+            set {
+                this["dataBaseUser"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("180")]
+        public int addChangeBookColumnWidth {
+            get {
+                return ((int)(this["addChangeBookColumnWidth"]));
+            }
+            set {
+                this["addChangeBookColumnWidth"] = value;
             }
         }
     }

@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:BookOrganiser"
         xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
+        Title="MainWindow" Height="600" Width="800"
+        Closing="Window_Closing"
+        SizeChanged="Window_SizeChanged">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -16,10 +18,11 @@
         </Grid.RowDefinitions>
         <DockPanel Height="30" Background="WhiteSmoke" VerticalAlignment="Top" Grid.Row="0">
             <Button Width="100" Height="25" Margin="5,0,0,0" HorizontalAlignment="Left" Content="Add Book" Name="AddBookBtn" Click="AddBookBtn_Click"/>
-            <Button Width="100" Height="25" Margin="5,0,0,0" HorizontalAlignment="Left" Content="Search Book" Name="SearchBookBtn"/>
+            <Button Width="100" Height="25" Margin="5,0,0,0" HorizontalAlignment="Left" Content="Search Book" Name="SearchBookBtn" Click="SearchBookBtn_Click"/>
             <TextBlock VerticalAlignment="Center" Margin="5,0,0,0">Quick search:</TextBlock>
             <TextBox Height="25" Width="150" Margin="5,0,0,0" VerticalContentAlignment="Center" Name="QuickSearchTB" KeyDown="QuickSearchTB_KeyDown"></TextBox>
             <Button Width="25" Height="25" Margin="5,0,0,0" HorizontalAlignment="Left" Content="🔍" Name="QuickSearchBtn" Click="QuickSearchBtn_Click"/>
+            <Button Width="25" Height="25" Margin="0,0,5,0" HorizontalAlignment="Right" Content="⚙" Name="SettingsBtn" Click="SettingsBtn_Click"/>
         </DockPanel>
 
         <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden" Grid.Row="1"
@@ -71,27 +74,27 @@
                 <TextBlock Grid.Column="18" Margin="3" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" x:Name="column19">ISBN</TextBlock>
                 <TextBlock Grid.Column="19" Margin="3" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" x:Name="column20">My Comments</TextBlock>
                 <TextBlock Grid.Column="20"></TextBlock>
-                <GridSplitter Grid.Column="0" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1"/>
-                <GridSplitter Grid.Column="1" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1"/>
-                <GridSplitter Grid.Column="2" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1"/>
-                <GridSplitter Grid.Column="3" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1"/>
-                <GridSplitter Grid.Column="4" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1"/>
-                <GridSplitter Grid.Column="5" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1"/>
-                <GridSplitter Grid.Column="6" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1"/>
-                <GridSplitter Grid.Column="7" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1"/>
-                <GridSplitter Grid.Column="8" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1"/>
-                <GridSplitter Grid.Column="9" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1"/>
-                <GridSplitter Grid.Column="10" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1"/>
-                <GridSplitter Grid.Column="11" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1"/>
-                <GridSplitter Grid.Column="11" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1"/>
-                <GridSplitter Grid.Column="12" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1"/>
-                <GridSplitter Grid.Column="13" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1"/>
-                <GridSplitter Grid.Column="14" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1"/>
-                <GridSplitter Grid.Column="15" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1"/>
-                <GridSplitter Grid.Column="16" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1"/>
-                <GridSplitter Grid.Column="17" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1"/>
-                <GridSplitter Grid.Column="18" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1"/>
-                <GridSplitter Grid.Column="19" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1"/>
+                <GridSplitter Grid.Column="0" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1" DragCompleted="GridSplitter_DragCompleted"/>
+                <GridSplitter Grid.Column="1" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1" DragCompleted="GridSplitter_DragCompleted"/>
+                <GridSplitter Grid.Column="2" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1" DragCompleted="GridSplitter_DragCompleted"/>
+                <GridSplitter Grid.Column="3" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1" DragCompleted="GridSplitter_DragCompleted"/>
+                <GridSplitter Grid.Column="4" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1" DragCompleted="GridSplitter_DragCompleted"/>
+                <GridSplitter Grid.Column="5" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1" DragCompleted="GridSplitter_DragCompleted"/>
+                <GridSplitter Grid.Column="6" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1" DragCompleted="GridSplitter_DragCompleted"/>
+                <GridSplitter Grid.Column="7" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1" DragCompleted="GridSplitter_DragCompleted"/>
+                <GridSplitter Grid.Column="8" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1" DragCompleted="GridSplitter_DragCompleted"/>
+                <GridSplitter Grid.Column="9" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1" DragCompleted="GridSplitter_DragCompleted"/>
+                <GridSplitter Grid.Column="10" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1" DragCompleted="GridSplitter_DragCompleted"/>
+                <GridSplitter Grid.Column="11" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1" DragCompleted="GridSplitter_DragCompleted"/>
+                <GridSplitter Grid.Column="11" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1" DragCompleted="GridSplitter_DragCompleted"/>
+                <GridSplitter Grid.Column="12" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1" DragCompleted="GridSplitter_DragCompleted"/>
+                <GridSplitter Grid.Column="13" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1" DragCompleted="GridSplitter_DragCompleted"/>
+                <GridSplitter Grid.Column="14" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1" DragCompleted="GridSplitter_DragCompleted"/>
+                <GridSplitter Grid.Column="15" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1" DragCompleted="GridSplitter_DragCompleted"/>
+                <GridSplitter Grid.Column="16" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1" DragCompleted="GridSplitter_DragCompleted"/>
+                <GridSplitter Grid.Column="17" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1" DragCompleted="GridSplitter_DragCompleted"/>
+                <GridSplitter Grid.Column="18" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1" DragCompleted="GridSplitter_DragCompleted"/>
+                <GridSplitter Grid.Column="19" HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.1" DragCompleted="GridSplitter_DragCompleted"/>
 
             </Grid>
             <!-- End of Columns Header -->
