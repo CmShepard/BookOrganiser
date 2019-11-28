@@ -33,5 +33,10 @@ namespace BookOrganiser {
             AddOrChangeBook dialog = new AddOrChangeBook(this, mw);
             dialog.Show();
         }
+
+        private void BtnInternetSearch_Click(object sender, RoutedEventArgs e) {
+            InternetSearchWindow dialog = new InternetSearchWindow(mw, this, InternetSearchTB.Text);
+            dialog.Show();
+        }
     }
 }

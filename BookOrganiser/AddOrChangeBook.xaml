@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookOrganiser"
         mc:Ignorable="d"
-        Title="AddOrChangeBook" Height="600" Width="800" Closing="Window_Closing" >
+        Title="AddOrChangeBook" Height="1300" Width="800" Closing="Window_Closing" SizeChanged="Window_SizeChanged">
 
     <Window.Resources>
         <ContextMenu x:Key="cmButton">
@@ -27,6 +27,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition MinHeight="60"/>
                         <RowDefinition MinHeight="100"/>
+                        <RowDefinition MinHeight="60"/>
                         <RowDefinition MinHeight="60"/>
                         <RowDefinition MinHeight="60"/>
                         <RowDefinition MinHeight="60"/>
@@ -123,10 +124,10 @@
                         <TextBox Padding="5" FontSize="14" TextWrapping="Wrap"></TextBox>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0,1,1,0" Grid.Column="1" Grid.Row="3">
-                        <TextBox Padding="5" FontSize="14" TextWrapping="Wrap"></TextBox>
+                        <ComboBox Padding="5" FontSize="14" IsEditable="True" Name="LocationCB"></ComboBox>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0,1,1,0" Grid.Column="1" Grid.Row="4">
-                        <TextBox Padding="5" FontSize="14" TextWrapping="Wrap"></TextBox>
+                        <ComboBox Padding="5" FontSize="14" IsEditable="True" Name="AuthorsCB"></ComboBox>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0,1,1,0" Grid.Column="1" Grid.Row="5">
                         <TextBox Padding="5" FontSize="14" TextWrapping="Wrap"></TextBox>
@@ -135,31 +136,31 @@
                         <TextBox Padding="5" FontSize="14" TextWrapping="Wrap"></TextBox>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0,1,1,0" Grid.Column="1" Grid.Row="7">
-                        <TextBox Padding="5" FontSize="14" TextWrapping="Wrap"></TextBox>
+                        <ComboBox Padding="5" FontSize="14" IsEditable="True" Name="GenresCB"></ComboBox>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0,1,1,0" Grid.Column="1" Grid.Row="8">
-                        <TextBox Padding="5" FontSize="14" TextWrapping="Wrap"></TextBox>
+                        <ComboBox Padding="5" FontSize="14" IsEditable="True" Name="FormatCB"></ComboBox>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0,1,1,0" Grid.Column="1" Grid.Row="9">
-                        <TextBox Padding="5" FontSize="14" TextWrapping="Wrap"></TextBox>
+                        <ComboBox Padding="5" FontSize="14" IsEditable="True" Name="PublisherCB"></ComboBox>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0,1,1,0" Grid.Column="1" Grid.Row="10">
-                        <TextBox Padding="5" FontSize="14" TextWrapping="Wrap"></TextBox>
+                        <ComboBox Padding="5" FontSize="14" IsEditable="True" Name="SeriesCB"></ComboBox>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0,1,1,0" Grid.Column="1" Grid.Row="11">
-                        <TextBox Padding="5" FontSize="14" TextWrapping="Wrap"></TextBox>
+                        <ComboBox Padding="5" FontSize="14" IsEditable="True" Name="LanguageCB"></ComboBox>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0,1,1,0" Grid.Column="1" Grid.Row="12">
                         <TextBox Padding="5" FontSize="14" TextWrapping="Wrap"></TextBox>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0,1,1,0" Grid.Column="1" Grid.Row="13">
-                        <TextBox Padding="5" FontSize="14" TextWrapping="Wrap"></TextBox>
+                        <ComboBox Padding="5" FontSize="14" IsEditable="True" Name="CurrencyCB"></ComboBox>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0,1,1,0" Grid.Column="1" Grid.Row="14">
                         <TextBox Padding="5" FontSize="14" TextWrapping="Wrap"></TextBox>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0,1,1,0" Grid.Column="1" Grid.Row="15">
-                        <TextBox Padding="5" FontSize="14" TextWrapping="Wrap"></TextBox>
+                        <ComboBox Padding="5" FontSize="14" IsEditable="True" Name="CoverTypeCB"></ComboBox>
                     </Border>
                     <Border BorderBrush="Black" BorderThickness="0,1,1,0" Grid.Column="1" Grid.Row="16">
                         <TextBox Padding="5" FontSize="14" TextWrapping="Wrap"></TextBox>
@@ -175,7 +176,7 @@
                     </Border>
 
 
-                    <GridSplitter Grid.Column="0" Grid.Row="0" Grid.RowSpan="19"  HorizontalAlignment="Right" ResizeDirection="Columns" Width="2" Background="Black" Opacity="0.5"/>
+                    <GridSplitter Grid.Column="0" Grid.Row="0" Grid.RowSpan="20"  HorizontalAlignment="Right" ResizeDirection="Columns" Width="3" Background="Black" Opacity="0.5" DragCompleted="GridSplitter_DragCompleted"/>
 
                 </Grid>
             

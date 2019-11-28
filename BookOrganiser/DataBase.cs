@@ -24,22 +24,26 @@ namespace BookOrganiser {
         }
         //! Get all distinct values of some column used to group books
         public static string[] GetDistinctValues(string column, string table) {
-            List<string> ret = new List<string>();
-            string querry = "SELECT DISTINCT(" + column + ") FROM " + table + " \nORDER BY " + column + ";";
-            NpgsqlCommand npgSqlCommand = new NpgsqlCommand(querry, connection);
-            NpgsqlDataReader npgSqlDataReader = npgSqlCommand.ExecuteReader();
-            if (npgSqlDataReader.HasRows) {
-                foreach (DbDataRecord dbDataRecord in npgSqlDataReader)
-                    ret.Add(dbDataRecord[column] as string);
-                npgSqlDataReader.Close();
-                return ret.ToArray();
+            if (connection != null) {
+                List<string> ret = new List<string>();
+                string querry = "SELECT DISTINCT(" + column + ") FROM " + table + " \nORDER BY " + column + ";";
+                NpgsqlCommand npgSqlCommand = new NpgsqlCommand(querry, connection);
+                NpgsqlDataReader npgSqlDataReader = npgSqlCommand.ExecuteReader();
+                if (npgSqlDataReader.HasRows) {
+                    foreach (DbDataRecord dbDataRecord in npgSqlDataReader)
+                        ret.Add(dbDataRecord[column] as string);
+                    npgSqlDataReader.Close();
+                    return ret.ToArray();
+                } else {
+                    npgSqlDataReader.Close();
+                    return null;
+                }
             } else {
-                npgSqlDataReader.Close();
                 return null;
             }
         }
 
-        //! Returns the maximum ID of the table
+        //! Returns the maximum ID from the table
         public static int GetMaxBookId() {
             string querry = "SELECT MAX(id) FROM books";
             NpgsqlCommand npgSqlCommand = new NpgsqlCommand(querry, connection);
@@ -55,7 +59,8 @@ namespace BookOrganiser {
         }
 
         //! Returns querry for the SELECT command
-        public static string CreateSelectQuerry(string[] columns, string table, string orderByColumn, string whereColumn, string whereValue, string quickSearch) {
+        public static string CreateSelectQuerry(string[] columns, string table, string orderByColumn,
+            string whereColumn, string whereValue, string quickSearch, string advancedSearchString) {
             string querry = "SELECT ";
             for(int i = 0; i < columns.Length; i++) {
                 if (i != columns.Length - 1)
@@ -66,7 +71,7 @@ namespace BookOrganiser {
             querry += table;
             if (whereColumn.Length > 0)
                 querry += "\nWHERE " + whereColumn + " = '" + whereValue + "'";
-            if(quickSearch.Length > 0) {
+            if(quickSearch != null && quickSearch.Length > 0) {
                 for(int i = 2; i < columns.Length; i++) {
                     if (i == 2)
                         querry += " AND (";
@@ -77,12 +82,15 @@ namespace BookOrganiser {
                 }
                 querry += ")";
             }
+            if(advancedSearchString != null && advancedSearchString.Length > 0) {
+                querry += advancedSearchString;
+            }
             if (orderByColumn.Length > 0)
                 querry += "\nORDER BY " + orderByColumn + " DESC";
             querry += ";";
             return querry;
         }
-
+        //! Create insert querry
         public static string CreateInsertQuerry(string[] columns, string table, string[] values) {
             string querry = "INSERT INTO " + table + "(";
             querry += columns[0];
@@ -97,13 +105,13 @@ namespace BookOrganiser {
             return querry;
         }
 
-        // Create delete querry
+        //! Create delete querry
         public static string CreateDeleteQuerry(string table, string whereColumn, string whereValue) {
             string querry = "DELETE FROM " + table + " \nWHERE ";
             querry += whereColumn + " = " + whereValue + ";";
             return querry;
         }
-
+        //! Return update querry
         public static string CreateUpdateQuerry(string[] columns, string table, string[] values) {
             string querry = "UPDATE " + table + " \nSET ";
             querry += columns[0] + " = " + values[0];
@@ -113,6 +121,7 @@ namespace BookOrganiser {
             querry += " \n WHERE " + columns[0] + " = '" + values[0] + "';";
             return querry;
         }
+        //! Execute querries that do not require output (Update, delete, insert, etc.)
         public static void ExecuteQuerryWithoutOutput(string querry) {
             NpgsqlCommand npgSqlCommand = new NpgsqlCommand(querry, connection);
             npgSqlCommand.ExecuteNonQuery();

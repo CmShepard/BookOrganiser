@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,13 +23,16 @@ namespace BookOrganiser {
         private int _numValue = 1;
         AddBookWindow abw;
         MainWindow mw;
+        InternetSearchWindow isw;
         Book book;
         bool isAddingBook = true;
         bool[] wasChanged = new bool[20];
+        List<int> cb = new List<int>() { 3, 4, 7, 8, 9, 10, 11, 13, 15 };
 
         //! Constructor for adding new book
         public AddOrChangeBook(AddBookWindow _abw, MainWindow _mw) {
             InitializeComponent();
+            ApplySettings();
             txtNum.Text = _numValue.ToString();
             abw = _abw;
             mw = _mw;
@@ -36,15 +42,79 @@ namespace BookOrganiser {
                 if (abw.saveBookValues[i]) {
                     MainGrid.Children.OfType<Border>().Where(j => Grid.GetRow(j) == i).First().Background 
                             = new SolidColorBrush(Colors.PeachPuff);
-                    TextBox tb = (TextBox)MainGrid.Children.OfType<Border>().Where(j => (Grid.GetColumn(j) == 1)
+                    if (cb.Contains(i)) {
+                        ComboBox combo = (ComboBox)MainGrid.Children.OfType<Border>().Where(j => (Grid.GetColumn(j) == 1)
+                        && (Grid.GetRow(j) == i)).First().Child;
+                        combo.Text = abw.savedBookValues[i];
+                    } else {
+                        TextBox tb = (TextBox)MainGrid.Children.OfType<Border>().Where(j => (Grid.GetColumn(j) == 1)
                             && (Grid.GetRow(j) == i)).First().Child;
-                    tb.Text = abw.savedBookValues[i];
+                        tb.Text = abw.savedBookValues[i];
+                    }
+                    
                 }
             }
         }
+
+        //! Constructor for adding new book
+        public AddOrChangeBook(AddBookWindow _abw, MainWindow _mw,InternetSearchWindow _isw, Book book) {
+            InitializeComponent();
+            ApplySettings();
+            
+            txtNum.Text = _numValue.ToString();
+            abw = _abw;
+            mw = _mw;
+            isw = _isw;
+            CoverImage.Source = null;
+            this.Title = "Add Book";
+
+            for(int i = 2; i < book.Params.Length; i++) {
+                if (cb.Contains(i)) {
+                    ComboBox combo = (ComboBox)MainGrid.Children.OfType<Border>().Where(j => (Grid.GetColumn(j) == 1)
+                    && (Grid.GetRow(j) == i)).First().Child;
+                    combo.Text = book.Params[i];
+                } else {
+                    TextBox tb = (TextBox)MainGrid.Children.OfType<Border>().Where(j => (Grid.GetColumn(j) == 1)
+                        && (Grid.GetRow(j) == i)).First().Child;
+                    tb.Text = book.Params[i];
+                }
+            }
+
+            WebClient client = new WebClient();
+            Stream stream = client.OpenRead(book.Params[1]);
+            Bitmap bitmap;
+            bitmap = new Bitmap(stream);
+
+            CoverImage.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
+                    bitmap.GetHbitmap(),
+                    IntPtr.Zero,
+                    System.Windows.Int32Rect.Empty,
+                    BitmapSizeOptions.FromWidthAndHeight(bitmap.Width, bitmap.Height));
+
+            for (int i = 0; i < abw.saveBookValues.Length; i++) {
+                if (abw.saveBookValues[i]) {
+                    MainGrid.Children.OfType<Border>().Where(j => Grid.GetRow(j) == i).First().Background
+                            = new SolidColorBrush(Colors.PeachPuff);
+                    if (cb.Contains(i)) {
+                        ComboBox combo = (ComboBox)MainGrid.Children.OfType<Border>().Where(j => (Grid.GetColumn(j) == 1)
+                        && (Grid.GetRow(j) == i)).First().Child;
+                        combo.Text = abw.savedBookValues[i];
+                    } else {
+                        TextBox tb = (TextBox)MainGrid.Children.OfType<Border>().Where(j => (Grid.GetColumn(j) == 1)
+                            && (Grid.GetRow(j) == i)).First().Child;
+                        tb.Text = abw.savedBookValues[i];
+                    }
+                }
+            }
+
+
+
+        }
+
         //! Constructor for the cange book form
         public AddOrChangeBook(Book _book, MainWindow _mw) {
             InitializeComponent();
+            ApplySettings();
             isAddingBook = false;
             book = _book;
             mw = _mw;
@@ -55,9 +125,15 @@ namespace BookOrganiser {
             for(int i = 0; i < book.Params.Length; i++) {
                 if (i != 1 && i != 0) {
                     // Load everything but cover and id
-                    TextBox tb = (TextBox)MainGrid.Children.OfType<Border>().Where(j => (Grid.GetColumn(j) == 1)
+                    if (cb.Contains(i)) {
+                        ComboBox combo = (ComboBox)MainGrid.Children.OfType<Border>().Where(j => (Grid.GetColumn(j) == 1)
+                        && (Grid.GetRow(j) == i)).First().Child;
+                        combo.Text = book.Params[i];
+                    } else {
+                        TextBox tb = (TextBox)MainGrid.Children.OfType<Border>().Where(j => (Grid.GetColumn(j) == 1)
                             && (Grid.GetRow(j) == i)).First().Child;
-                    tb.Text = book.Params[i];
+                        tb.Text = book.Params[i];
+                    }
                 } else if (i == 0) {
                     TextBlock tb = (TextBlock)MainGrid.Children.OfType<Border>().Where(j => (Grid.GetColumn(j) == 1)
                             && (Grid.GetRow(j) == i)).First().Child;
@@ -73,6 +149,33 @@ namespace BookOrganiser {
                     CoverImage.Stretch = Stretch.Uniform;
                 }
             }
+        }
+
+        void ApplySettings() {
+            // Window width and height
+            this.Width = Properties.Settings.Default.addChangeBookWindowWidth;
+            this.Height = Properties.Settings.Default.addChangeBookWindowHeight;
+
+            MainGrid.ColumnDefinitions[0].Width = new GridLength( (double)Properties.Settings.Default.addChangeBookColumnWidth);
+            // Fill in Combo boxes
+            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[3], Properties.Settings.Default.tableName))
+                LocationCB.Items.Add(s);
+            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[4], Properties.Settings.Default.tableName))
+                AuthorsCB.Items.Add(s);
+            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[7], Properties.Settings.Default.tableName))
+                GenresCB.Items.Add(s);
+            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[8], Properties.Settings.Default.tableName))
+                FormatCB.Items.Add(s);
+            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[9], Properties.Settings.Default.tableName))
+                PublisherCB.Items.Add(s);
+            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[10], Properties.Settings.Default.tableName))
+                SeriesCB.Items.Add(s);
+            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[11], Properties.Settings.Default.tableName))
+                LanguageCB.Items.Add(s);
+            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[13], Properties.Settings.Default.tableName))
+                CurrencyCB.Items.Add(s);
+            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[15], Properties.Settings.Default.tableName))
+                CoverTypeCB.Items.Add(s);
         }
 
         #region NumericUpDown
@@ -111,10 +214,19 @@ namespace BookOrganiser {
             if (isAddingBook) {
                 for (int i = 0; i < 20; i++) {
                     if (abw.saveBookValues[i]) {
-                        TextBox tb = (TextBox)MainGrid.Children.OfType<Border>().Where(j => (Grid.GetColumn(j) == 1)
+                        if (cb.Contains(i)) {
+                            ComboBox combo = (ComboBox)MainGrid.Children.OfType<Border>().Where(j => (Grid.GetColumn(j) == 1)
+                            && (Grid.GetRow(j) == i)).First().Child;
+                            abw.savedBookValues[i] = combo.Text;
+                        } else {
+                            TextBox tb = (TextBox)MainGrid.Children.OfType<Border>().Where(j => (Grid.GetColumn(j) == 1)
                                 && (Grid.GetRow(j) == i)).First().Child;
-                        abw.savedBookValues[i] = tb.Text.ToString();
+                            abw.savedBookValues[i] = tb.Text;
+                        }
                     }
+                }
+                if(isw != null) {
+                    isw.Close();
                 }
             }
                 
@@ -176,20 +288,22 @@ namespace BookOrganiser {
             }
             wasChanged[1] = true;
         }
-
+        //! Delete the cover from the Image Control
         private void MenuItemDelete_Click(object sender, RoutedEventArgs e) {
             CoverImage.Source = null;
             wasChanged[1] = true;
         }
-
+        //! Save the Changes or add a new book to the database
         private void AddBookBtn_Click(object sender, RoutedEventArgs e) {
             if (isAddingBook) {
-                for(int k = 0; k < NumValue; k++) {
-                    // If new book is being added
+                // If new book is being added
+                for (int k = 0; k < NumValue; k++) {
+                    // If numeric updown is set to be greater than 1 -> create more rows in the database
                     Book newBook;
                     string[] parameters = new string[20];
                     parameters[0] = (DataBase.GetMaxBookId() + 1).ToString();
                     if (CoverImage.Source != null) {
+                        // Save cover image as new file, save path to the database
                         string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data", "images", parameters[0]);
                         parameters[1] = "data\\images\\" + parameters[0];
                         var encoder = new PngBitmapEncoder();
@@ -198,20 +312,26 @@ namespace BookOrganiser {
                             encoder.Save(stream);
                     }
                     for (int i = 2; i < parameters.Length; i++) {
-                        TextBox tb = (TextBox)MainGrid.Children.OfType<Border>().Where(j => (Grid.GetColumn(j) == 1)
+                        if (cb.Contains(i)) {
+                            ComboBox combo = (ComboBox)MainGrid.Children.OfType<Border>().Where(j => (Grid.GetColumn(j) == 1)
+                            && (Grid.GetRow(j) == i)).First().Child;
+                            parameters[i] = combo.Text;
+                        } else {
+                            TextBox tb = (TextBox)MainGrid.Children.OfType<Border>().Where(j => (Grid.GetColumn(j) == 1)
                                 && (Grid.GetRow(j) == i)).First().Child;
-                        parameters[i] = tb.Text;
+                            parameters[i] = tb.Text;
+                        }
                     }
                     newBook = new Book(parameters);
-                    DataBase.ExecuteQuerryWithoutOutput(DataBase.CreateInsertQuerry(MainWindow.paramNames, "books", newBook.Params));
+                    DataBase.ExecuteQuerryWithoutOutput(DataBase.CreateInsertQuerry(MainWindow.paramNames, MainWindow.tableName, newBook.Params));
                 }
-                mw.ClearRows();
-                mw.UpdateData(mw.searchString);
+                // Update book view and close this dialog
+                mw.UpdateData(MainWindow.searchString, MainWindow.advancedSearchString);
                 this.Close();
             } else {
                 // If the book is being updated
 
-                // If image was chaged or added - delete or create new file
+                // If cover image was chaged, deleted or added - delete or create new file
                 if (wasChanged[1]) {
                     if (CoverImage.Source == null) {
                         if (!isAddingBook && book.Cover != "" && book.Cover != null)
@@ -227,28 +347,44 @@ namespace BookOrganiser {
                     }
                 }
 
-                    for (int i = 2; i < book.Params.Length; i++) {
+                for (int i = 2; i < book.Params.Length; i++) {
+                    if (cb.Contains(i)) {
+                        ComboBox combo = (ComboBox)MainGrid.Children.OfType<Border>().Where(j => (Grid.GetColumn(j) == 1)
+                        && (Grid.GetRow(j) == i)).First().Child;
+                        book.Params[i] = combo.Text;
+                    } else {
                         TextBox tb = (TextBox)MainGrid.Children.OfType<Border>().Where(j => (Grid.GetColumn(j) == 1)
-                                && (Grid.GetRow(j) == i)).First().Child;
+                            && (Grid.GetRow(j) == i)).First().Child;
                         book.Params[i] = tb.Text;
                     }
-                    DataBase.ExecuteQuerryWithoutOutput(DataBase.CreateUpdateQuerry(MainWindow.paramNames, "books", book.Params));
-                mw.ClearRows();
-                mw.UpdateData(mw.searchString);
+                    
+                }
+                DataBase.ExecuteQuerryWithoutOutput(DataBase.CreateUpdateQuerry(MainWindow.paramNames, MainWindow.tableName, book.Params));
+                mw.UpdateData(MainWindow.searchString, MainWindow.advancedSearchString);
                 this.Close();
             }
             
         }
-
+        //! Delete book from the database
         private void DeleteBtn_Click(object sender, RoutedEventArgs e) {
-            DataBase.ExecuteQuerryWithoutOutput(DataBase.CreateDeleteQuerry("books", "id", book.Id));
-            mw.ClearRows();
-            mw.UpdateData(mw.searchString);
+            DataBase.ExecuteQuerryWithoutOutput(DataBase.CreateDeleteQuerry(MainWindow.tableName, "id", book.Id));
+            mw.UpdateData(MainWindow.searchString, MainWindow.advancedSearchString);
             this.Close();
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e) {
             this.Close();
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e) {
+            Properties.Settings.Default.addChangeBookWindowHeight = (int)e.NewSize.Height;
+            Properties.Settings.Default.addChangeBookWindowWidth = (int)e.NewSize.Width;
+            Properties.Settings.Default.Save();
+        }
+
+        private void GridSplitter_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e) {
+            Properties.Settings.Default.addChangeBookColumnWidth = (int)MainGrid.ColumnDefinitions[0].Width.Value;
+            Properties.Settings.Default.Save();
         }
     }
 }

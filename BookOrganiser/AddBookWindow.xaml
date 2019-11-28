@@ -18,8 +18,8 @@
                 <Grid Background="White">
                     <TextBlock Margin="20" Background="Azure" VerticalAlignment="Top" TextAlignment="Center" Padding="10" Height="50" TextWrapping="Wrap" >Programm will try to search for the book in the internet.
                     Please search for ISBN, author or book name.</TextBlock>
-                    <TextBox Width="400" Height="25" VerticalAlignment="Top" Margin="0,100,0,0"></TextBox>
-                    <Button Width="400" Height="25" VerticalAlignment="Top" Margin="0,140,0,0" >Start adding book >>></Button>
+                    <TextBox Width="400" Height="25" VerticalAlignment="Top" Margin="0,100,0,0" Name="InternetSearchTB"></TextBox>
+                    <Button Width="400" Height="25" VerticalAlignment="Top" Margin="0,140,0,0" Name="BtnInternetSearch" Click="BtnInternetSearch_Click">Start adding book >>></Button>
                 </Grid>
             </TabItem>
         </TabControl>
