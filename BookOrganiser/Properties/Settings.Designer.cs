@@ -418,5 +418,17 @@ namespace BookOrganiser.Properties {
                 this["addChangeBookColumnWidth"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool isFirstLaunch {
+            get {
+                return ((bool)(this["isFirstLaunch"]));
+            }
+            set {
+                this["isFirstLaunch"] = value;
+            }
+        }
     }
 }

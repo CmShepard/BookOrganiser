@@ -32,13 +32,20 @@ namespace BookOrganiser {
         public MainWindow() {
             InitializeComponent();
             ReadSettings();
-            if (!DataBase.ConnectToDataBase(Properties.Settings.Default.dataBaseHost,
-                Properties.Settings.Default.dataBasePort.ToString(), "postgres",
-                Properties.Settings.Default.dataBasePassword, Properties.Settings.Default.dataBaseName)){
-                MessageBox.Show("Failed to connect to the database!");
+            if (!Properties.Settings.Default.isFirstLaunch) {
+                if (!DataBase.ConnectToDataBase(Properties.Settings.Default.dataBaseHost,
+                    Properties.Settings.Default.dataBasePort.ToString(), Properties.Settings.Default.dataBaseUser,
+                    Properties.Settings.Default.dataBasePassword, Properties.Settings.Default.dataBaseName)) {
+                    MessageBox.Show("Failed to connect to the database!");
+                }
+                UpdateData("", "");
+            } else {
+                FirstLaunchDialog fld = new FirstLaunchDialog(this);
+                fld.Topmost = true;
+                fld.Owner = this;
+                fld.Show();
             }
-            //ImportFromLiba();
-            UpdateData("", "");
+            
         }
 
         void ReadSettings() {

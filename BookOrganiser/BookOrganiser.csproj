@@ -95,6 +95,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Book.cs" />
+    <Compile Include="FirstLaunchDialog.xaml.cs">
+      <DependentUpon>FirstLaunchDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="InternetSearchWindow.xaml.cs">
       <DependentUpon>InternetSearchWindow.xaml</DependentUpon>
     </Compile>
@@ -113,6 +116,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddOrChangeBook.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FirstLaunchDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
