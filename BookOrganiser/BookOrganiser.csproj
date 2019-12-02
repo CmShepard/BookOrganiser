@@ -104,7 +104,6 @@
     <Compile Include="ReplaсeDialog.xaml.cs">
       <DependentUpon>ReplaсeDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SaveLoadSettings.cs" />
     <Compile Include="SearchWindow.xaml.cs">
       <DependentUpon>SearchWindow.xaml</DependentUpon>
     </Compile>

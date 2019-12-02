@@ -31,6 +31,7 @@ namespace BookOrganiser {
 
         public MainWindow() {
             InitializeComponent();
+            this.Show();
             ReadSettings();
             if (!Properties.Settings.Default.isFirstLaunch) {
                 if (!DataBase.ConnectToDataBase(Properties.Settings.Default.dataBaseHost,
@@ -41,9 +42,9 @@ namespace BookOrganiser {
                 UpdateData("", "");
             } else {
                 FirstLaunchDialog fld = new FirstLaunchDialog(this);
+                fld.Show();
                 fld.Topmost = true;
                 fld.Owner = this;
-                fld.Show();
             }
             
         }
