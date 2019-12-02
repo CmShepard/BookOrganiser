@@ -37,11 +37,8 @@ namespace BookOrganiser {
             string connStr = "Server=" + DataBaseHostTB.Text +";Port=" + DataBasePortTB.Text 
                 + ";User Id=" + DataBaseUserNameTB.Text + ";Password=" + DataBasePasswordTB.Text + ";";
             NpgsqlConnection m_conn = new NpgsqlConnection(connStr);
-            NpgsqlCommand m_createdb_cmd = new NpgsqlCommand(@"
-                CREATE DATABASE IF NOT EXISTS " + DataBaseNameTB.Text + @"
-                ENCODING = 'UTF8'
-                CONNECTION LIMIT = -1;
-                ", m_conn);
+            NpgsqlCommand m_createdb_cmd = new NpgsqlCommand(
+                "CREATE DATABASE " + DataBaseNameTB.Text + " \nENCODING = 'UTF8'\nCONNECTION LIMIT = -1;", m_conn);
             m_conn.Open();
             m_createdb_cmd.ExecuteNonQuery();
             m_conn.Close();
@@ -59,7 +56,7 @@ namespace BookOrganiser {
                 "annotation character varying(9999) COLLATE pg_catalog.\"default\", " +
                 "genres character varying(9999) COLLATE pg_catalog.\"default\", " +
                 "format character varying(9999) COLLATE pg_catalog.\"default\", " +
-                "id integer NOT NULL DEFAULT nextval('books_id_seq'::regclass), " +
+                "id serial NOT NULL, " +
                 "publisher character varying(9999) COLLATE pg_catalog.\"default\", " +
                 "series character varying(9999) COLLATE pg_catalog.\"default\", " +
                 "languages character varying(9999) COLLATE pg_catalog.\"default\", " +

@@ -51,7 +51,7 @@ namespace BookOrganiser {
             int id = 0;
             if (npgSqlDataReader.HasRows) {
                 foreach (DbDataRecord dbDataRecord in npgSqlDataReader)
-                    id =  int.Parse(dbDataRecord[0].ToString());
+                    int.TryParse(dbDataRecord[0].ToString(), out id);
             }
             npgSqlDataReader.Close();
             return id;

@@ -102,14 +102,16 @@ namespace BookOrganiser {
         public void UpdateData(string search, string advancedSearch) {
             ClearRows();
             string[] locations = DataBase.GetDistinctValues("location", tableName);
-            foreach (string loc in locations) {
-                Book[] books = DataBase.ExecuteSelectQuerry(DataBase.CreateSelectQuerry(paramNames, tableName, "title", "location",
-                    loc, search, advancedSearch));
-                if (books != null && books.Length > 0) {
-                    Grid grid;
-                    AddMainParameterRows(loc, books, out grid);
-                    if(openRows.IndexOf(loc) >= 0) {
-                        ShowHideBooksRows((Button)grid.Children[0], grid);
+            if(locations != null) {
+                foreach (string loc in locations) {
+                    Book[] books = DataBase.ExecuteSelectQuerry(DataBase.CreateSelectQuerry(paramNames, tableName, "title", "location",
+                        loc, search, advancedSearch));
+                    if (books != null && books.Length > 0) {
+                        Grid grid;
+                        AddMainParameterRows(loc, books, out grid);
+                        if (openRows.IndexOf(loc) >= 0) {
+                            ShowHideBooksRows((Button)grid.Children[0], grid);
+                        }
                     }
                 }
             }

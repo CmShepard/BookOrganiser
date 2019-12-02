@@ -158,24 +158,27 @@ namespace BookOrganiser {
 
             MainGrid.ColumnDefinitions[0].Width = new GridLength( (double)Properties.Settings.Default.addChangeBookColumnWidth);
             // Fill in Combo boxes
-            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[3], Properties.Settings.Default.tableName))
-                LocationCB.Items.Add(s);
-            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[4], Properties.Settings.Default.tableName))
-                AuthorsCB.Items.Add(s);
-            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[7], Properties.Settings.Default.tableName))
-                GenresCB.Items.Add(s);
-            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[8], Properties.Settings.Default.tableName))
-                FormatCB.Items.Add(s);
-            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[9], Properties.Settings.Default.tableName))
-                PublisherCB.Items.Add(s);
-            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[10], Properties.Settings.Default.tableName))
-                SeriesCB.Items.Add(s);
-            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[11], Properties.Settings.Default.tableName))
-                LanguageCB.Items.Add(s);
-            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[13], Properties.Settings.Default.tableName))
-                CurrencyCB.Items.Add(s);
-            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[15], Properties.Settings.Default.tableName))
-                CoverTypeCB.Items.Add(s);
+            if (DataBase.GetDistinctValues(MainWindow.paramNames[3], Properties.Settings.Default.tableName) != null) {
+
+                foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[3], Properties.Settings.Default.tableName))
+                    LocationCB.Items.Add(s);
+                foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[4], Properties.Settings.Default.tableName))
+                    AuthorsCB.Items.Add(s);
+                foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[7], Properties.Settings.Default.tableName))
+                    GenresCB.Items.Add(s);
+                foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[8], Properties.Settings.Default.tableName))
+                    FormatCB.Items.Add(s);
+                foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[9], Properties.Settings.Default.tableName))
+                    PublisherCB.Items.Add(s);
+                foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[10], Properties.Settings.Default.tableName))
+                    SeriesCB.Items.Add(s);
+                foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[11], Properties.Settings.Default.tableName))
+                    LanguageCB.Items.Add(s);
+                foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[13], Properties.Settings.Default.tableName))
+                    CurrencyCB.Items.Add(s);
+                foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[15], Properties.Settings.Default.tableName))
+                    CoverTypeCB.Items.Add(s);
+            }
         }
 
         #region NumericUpDown

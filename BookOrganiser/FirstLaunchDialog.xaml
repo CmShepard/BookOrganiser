@@ -16,7 +16,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,133,0,0" TextWrapping="Wrap" Text="DataBase Port: " VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,163,0,0" TextWrapping="Wrap" Text="Table Name: " VerticalAlignment="Top"/>
 
-        <TextBox Name="DataBaseNameTB" Text="Books" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" Margin="140, 10,0,0" Height="23" Width="250"/>
+        <TextBox Name="DataBaseNameTB" Text="books" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" Margin="140, 10,0,0" Height="23" Width="250"/>
         <TextBox Name="DataBaseUserNameTB" Text="postgres" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" Margin="140, 40,0,0" Height="23" Width="250"/>
         <TextBox Name="DataBasePasswordTB" Text="" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" Margin="140, 70,0,0" Height="23" Width="250"/>
         <TextBox Name="DataBaseHostTB" Text="localhost" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" Margin="140, 100,0,0" Height="23" Width="250"/>

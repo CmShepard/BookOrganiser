@@ -22,24 +22,27 @@ namespace BookOrganiser {
             InitializeComponent();
             mw = _mw;
             // Fill in Combo boxes
-            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[3], Properties.Settings.Default.tableName))
-                LocationComboBox.Items.Add(s);
-            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[4], Properties.Settings.Default.tableName))
-                AuthorComboBox.Items.Add(s);
-            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[7], Properties.Settings.Default.tableName))
-                GenresComboBox.Items.Add(s);
-            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[8], Properties.Settings.Default.tableName))
-                FormatComboBox.Items.Add(s);
-            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[9], Properties.Settings.Default.tableName))
-                PublisherComboBox.Items.Add(s);
-            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[10], Properties.Settings.Default.tableName))
-                SeriesComboBox.Items.Add(s);
-            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[11], Properties.Settings.Default.tableName))
-                LanguagesComboBox.Items.Add(s);
-            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[13], Properties.Settings.Default.tableName))
-                CurrencyComboBox.Items.Add(s);
-            foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[15], Properties.Settings.Default.tableName))
-                CoverTypeComboBox.Items.Add(s);
+            if(DataBase.GetDistinctValues(MainWindow.paramNames[3], Properties.Settings.Default.tableName) != null) {
+                foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[3], Properties.Settings.Default.tableName))
+                    LocationComboBox.Items.Add(s);
+                foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[4], Properties.Settings.Default.tableName))
+                    AuthorComboBox.Items.Add(s);
+                foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[7], Properties.Settings.Default.tableName))
+                    GenresComboBox.Items.Add(s);
+                foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[8], Properties.Settings.Default.tableName))
+                    FormatComboBox.Items.Add(s);
+                foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[9], Properties.Settings.Default.tableName))
+                    PublisherComboBox.Items.Add(s);
+                foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[10], Properties.Settings.Default.tableName))
+                    SeriesComboBox.Items.Add(s);
+                foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[11], Properties.Settings.Default.tableName))
+                    LanguagesComboBox.Items.Add(s);
+                foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[13], Properties.Settings.Default.tableName))
+                    CurrencyComboBox.Items.Add(s);
+                foreach (string s in DataBase.GetDistinctValues(MainWindow.paramNames[15], Properties.Settings.Default.tableName))
+                    CoverTypeComboBox.Items.Add(s);
+            }
+            
         }
         //! Create advanced search string and search for books in the book view
         private void SearchBtn_Click(object sender, RoutedEventArgs e) {
