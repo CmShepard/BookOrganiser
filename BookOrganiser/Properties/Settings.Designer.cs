@@ -430,5 +430,29 @@ namespace BookOrganiser.Properties {
                 this["isFirstLaunch"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int orderByColumnIndex {
+            get {
+                return ((int)(this["orderByColumnIndex"]));
+            }
+            set {
+                this["orderByColumnIndex"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int sortByColumnIndex {
+            get {
+                return ((int)(this["sortByColumnIndex"]));
+            }
+            set {
+                this["sortByColumnIndex"] = value;
+            }
+        }
     }
 }

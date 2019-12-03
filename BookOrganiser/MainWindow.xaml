@@ -7,6 +7,8 @@
         xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800"
+        MinWidth="750"
+        MinHeight="300"
         Closing="Window_Closing"
         SizeChanged="Window_SizeChanged">
 
@@ -22,6 +24,12 @@
             <TextBlock VerticalAlignment="Center" Margin="5,0,0,0">Quick search:</TextBlock>
             <TextBox Height="25" Width="150" Margin="5,0,0,0" VerticalContentAlignment="Center" Name="QuickSearchTB" KeyDown="QuickSearchTB_KeyDown"></TextBox>
             <Button Width="25" Height="25" Margin="5,0,0,0" HorizontalAlignment="Left" Content="🔍" Name="QuickSearchBtn" Click="QuickSearchBtn_Click"/>
+            <Grid HorizontalAlignment="Left" Margin="10,0,0,0">
+                <TextBlock Height="12" Width="100" Margin="0,-01,0,17" Text="Order By:" FontSize="10"/>
+                <ComboBox Height="15" Width="100" Padding="2,0,0,0" FontSize="10" Name="OrderByCB" VerticalAlignment="Bottom" Margin="0,0,0,2.7" SelectionChanged="OrderByCB_SelectionChanged" />
+            </Grid>
+            
+
             <Button Width="25" Height="25" Margin="0,0,5,0" HorizontalAlignment="Right" Content="⚙" Name="SettingsBtn" Click="SettingsBtn_Click"/>
         </DockPanel>
 

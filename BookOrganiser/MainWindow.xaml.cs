@@ -23,11 +23,13 @@ namespace BookOrganiser {
             "annotation", "genres", "format", "publisher", "series", "languages", "price", "currency", "circulation",
             "cover_type", "page_count", "year", "isbn", "user_comments"};
         public static string tableName = "books";
+        //! List of possible sortBy columns
+        List<int> cb = new List<int>() { 3, 4, 7, 8, 9, 10, 11, 13, 15 };
 
         public MainWindow() {
             InitializeComponent();
-            this.Show();
             ReadSettings();
+            this.Show();
             if (!Properties.Settings.Default.isFirstLaunch) {
                 if (!DataBase.ConnectToDataBase(Properties.Settings.Default.dataBaseHost,
                     Properties.Settings.Default.dataBasePort.ToString(), Properties.Settings.Default.dataBaseUser,
@@ -58,6 +60,12 @@ namespace BookOrganiser {
 
             for(int i = 0; i < 20; i++) {
                 Headers.ColumnDefinitions[i].Width = new GridLength((int)Properties.Settings.Default["columnWidth" + i.ToString()]);
+            }
+
+            foreach(int i in cb) {
+                OrderByCB.Items.Add(paramNames[i]);
+                if (Properties.Settings.Default.orderByColumnIndex == i)
+                    OrderByCB.SelectedIndex = cb.IndexOf(i);
             }
         }
 
@@ -100,15 +108,16 @@ namespace BookOrganiser {
         //! Updates rows based on search
         public void UpdateData(string search, string advancedSearch) {
             ClearRows();
-            string[] locations = DataBase.GetDistinctValues("location", tableName);
-            if(locations != null) {
-                foreach (string loc in locations) {
-                    Book[] books = DataBase.ExecuteSelectQuerry(DataBase.CreateSelectQuerry(paramNames, tableName, "title", "location",
-                        loc, search, advancedSearch));
+            string[] orderByParameter = DataBase.GetDistinctValues(paramNames[Properties.Settings.Default.orderByColumnIndex], tableName);
+            if(orderByParameter != null) {
+                foreach (string param in orderByParameter) {
+                    Book[] books = DataBase.ExecuteSelectQuerry(DataBase.CreateSelectQuerry(paramNames, tableName,
+                        paramNames[Properties.Settings.Default.sortByColumnIndex], paramNames[Properties.Settings.Default.orderByColumnIndex],
+                        param, search, advancedSearch));
                     if (books != null && books.Length > 0) {
                         Grid grid;
-                        AddMainParameterRows(loc, books, out grid);
-                        if (openRows.IndexOf(loc) >= 0) {
+                        AddMainParameterRows(param, books, out grid);
+                        if (openRows.IndexOf(param) >= 0) {
                             ShowHideBooksRows((Button)grid.Children[0], grid);
                         }
                     }
@@ -312,6 +321,12 @@ namespace BookOrganiser {
         private void SettingsBtn_Click(object sender, RoutedEventArgs e) {
             SettingsWindow dialog = new SettingsWindow();
             dialog.Show();
+        }
+
+        private void OrderByCB_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            Properties.Settings.Default.orderByColumnIndex = cb[OrderByCB.SelectedIndex];
+            Properties.Settings.Default.Save();
+            UpdateData(searchString, advancedSearchString);
         }
     }
 }
