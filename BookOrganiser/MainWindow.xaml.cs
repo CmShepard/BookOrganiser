@@ -42,6 +42,8 @@ namespace BookOrganiser {
                 SearchBookBtn.IsEnabled = false;
                 SettingsBtn.IsEnabled = false;
                 QuickSearchBtn.IsEnabled = false;
+                OrderByCB.IsEnabled = false;
+                SortByCB.IsEnabled = false;
                 FirstLaunchDialog fld = new FirstLaunchDialog(this);
                 fld.Show();
                 fld.Topmost = true;
@@ -66,6 +68,12 @@ namespace BookOrganiser {
                 OrderByCB.Items.Add(paramNames[i]);
                 if (Properties.Settings.Default.orderByColumnIndex == i)
                     OrderByCB.SelectedIndex = cb.IndexOf(i);
+            }
+
+            for(int i = 0; i < paramNames.Length; i++) {
+                SortByCB.Items.Add(paramNames[i]);
+                if (i == Properties.Settings.Default.sortByColumnIndex)
+                    SortByCB.SelectedIndex = i;
             }
         }
 
@@ -325,6 +333,12 @@ namespace BookOrganiser {
 
         private void OrderByCB_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             Properties.Settings.Default.orderByColumnIndex = cb[OrderByCB.SelectedIndex];
+            Properties.Settings.Default.Save();
+            UpdateData(searchString, advancedSearchString);
+        }
+
+        private void SortByCB_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            Properties.Settings.Default.sortByColumnIndex = SortByCB.SelectedIndex;
             Properties.Settings.Default.Save();
             UpdateData(searchString, advancedSearchString);
         }

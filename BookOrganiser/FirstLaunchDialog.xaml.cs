@@ -68,6 +68,8 @@ namespace BookOrganiser {
             mw.SearchBookBtn.IsEnabled = true;
             mw.SettingsBtn.IsEnabled = true;
             mw.QuickSearchBtn.IsEnabled = true;
+            mw.OrderByCB.IsEnabled = true;
+            mw.SortByCB.IsEnabled = true;
             SaveSettings();
             this.Close();
         }
@@ -96,6 +98,8 @@ namespace BookOrganiser {
                 mw.SearchBookBtn.IsEnabled = true;
                 mw.SettingsBtn.IsEnabled = true;
                 mw.QuickSearchBtn.IsEnabled = true;
+                mw.OrderByCB.IsEnabled = true;
+                mw.SortByCB.IsEnabled = true;
                 mw.UpdateData("", "");
 
                 SaveSettings();

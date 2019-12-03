@@ -28,7 +28,11 @@
                 <TextBlock Height="12" Width="100" Margin="0,-01,0,17" Text="Order By:" FontSize="10"/>
                 <ComboBox Height="15" Width="100" Padding="2,0,0,0" FontSize="10" Name="OrderByCB" VerticalAlignment="Bottom" Margin="0,0,0,2.7" SelectionChanged="OrderByCB_SelectionChanged" />
             </Grid>
-            
+
+            <Grid HorizontalAlignment="Left" Margin="10,0,0,0">
+                <TextBlock Height="12" Width="100" Margin="0,-01,0,17" Text="Sort By:" FontSize="10"/>
+                <ComboBox Height="15" Width="100" Padding="2,0,0,0" FontSize="10" Name="SortByCB" VerticalAlignment="Bottom" Margin="0,0,0,2.7" SelectionChanged="SortByCB_SelectionChanged" />
+            </Grid>
 
             <Button Width="25" Height="25" Margin="0,0,5,0" HorizontalAlignment="Right" Content="⚙" Name="SettingsBtn" Click="SettingsBtn_Click"/>
         </DockPanel>
