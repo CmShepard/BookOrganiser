@@ -41,6 +41,10 @@ namespace BookOrganiser {
                 }
                 UpdateData("", "");
             } else {
+                AddBookBtn.IsEnabled = false;
+                SearchBookBtn.IsEnabled = false;
+                SettingsBtn.IsEnabled = false;
+                QuickSearchBtn.IsEnabled = false;
                 FirstLaunchDialog fld = new FirstLaunchDialog(this);
                 fld.Show();
                 fld.Topmost = true;
