@@ -10,8 +10,8 @@ namespace BookOrganiser {
         public static bool ConnectToDataBase(string server, string port, string user, string password, string databaseName) {
             string connectionParameters = "Server=" + server +
                 ";Port=" + port + ";User Id=" + user + ";Password=" + password + ";Database=" + databaseName + ";";
+            connection = new NpgsqlConnection(connectionParameters);
             try {
-                connection = new NpgsqlConnection(connectionParameters);
                 connection.Open();
             } catch {
                 return false;
@@ -143,7 +143,8 @@ namespace BookOrganiser {
         }
 
         public static void DisconnectDatabase() {
-            connection.Close();
+            if(connection != null)
+                connection.Close();
         }
     }
 }

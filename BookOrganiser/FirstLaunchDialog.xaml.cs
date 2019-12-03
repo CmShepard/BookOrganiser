@@ -88,8 +88,10 @@ namespace BookOrganiser {
         }
 
         private void FindDBBtn_Click(object sender, RoutedEventArgs e) {
-            if(DataBase.ConnectToDataBase(DataBaseHostTB.Text,
-                DataBasePortTB.Text, DataBaseUserNameTB.Text, DataBasePasswordTB.Text, DataBaseNameTB.Text)) {
+            string password = DataBasePasswordTB.Text;
+            string bdName = DataBaseNameTB.Text;
+            if (DataBase.ConnectToDataBase(DataBaseHostTB.Text,
+                DataBasePortTB.Text, DataBaseUserNameTB.Text, password, bdName)) {
                 mw.AddBookBtn.IsEnabled = true;
                 mw.SearchBookBtn.IsEnabled = true;
                 mw.SettingsBtn.IsEnabled = true;
